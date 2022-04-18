@@ -1,0 +1,10 @@
+.state {
+    box-sizing: border-box;
+    padding: 25px;
+    margin-top: 15px;
+    width: 205px;
+    background-color: purple;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+}
