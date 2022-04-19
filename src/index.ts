@@ -1,6 +1,7 @@
 import { fromEvent, map } from "rxjs";
 import { fibonacci } from "./utils";
 import * as t from 'io-ts'
+import { either } from "fp-ts";
 import { fold } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { components, App, StateField, Button } from './components';
@@ -18,6 +19,15 @@ const positiveInteger = new t.Type<number, string, string>(
         return isNaN(n) || n <= 0 ? t.failure(s, c, 'Введите число >= 0') : t.success(n)
     },
     String
+);
+
+const maxValidInteger = new t.Type<number, number, number>(
+    'number',
+    t.number.is,
+    (s,c) => {
+       return s > 500 ? t.failure(s,c) : t.success(s);
+    },
+    Number
 )
 
 const inputEvent = fromEvent<InputEvent>(components['input'], "input");
@@ -30,13 +40,7 @@ const showResult = () => {
 };
 
 const onRight = (value: number) => {
-    if (value > 500) {
-        actions['max_valid_value'](value);
-        Button();
-        StateField();
-        return;
-    }
-    actions['valid_value'](value);
+    pipe(maxValidInteger.decode(value), fold(actions['max_valid_value'], actions['valid_value']));
     Button();
     StateField();
 }
@@ -58,7 +62,6 @@ inputEvent
         }
         model.currentValue = value;
         pipe(positiveInteger.decode(value), fold(onLeft, onRight));
-        console.log(model);
     });
 
 buttonEvent.subscribe(() => {
