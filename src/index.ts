@@ -1,7 +1,6 @@
 import { fromEvent, map } from "rxjs";
 import { fibonacci } from "./utils";
 import * as t from 'io-ts'
-import { either } from "fp-ts";
 import { fold } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { components, App, StateField, Button } from './components';
