@@ -3,8 +3,13 @@
     padding: 25px;
     margin-top: 15px;
     width: 244px;
+    height: 110px;
     background-color: purple;
     color: white;
     text-align: center;
     border-radius: 8px;
+}
+
+button {
+    margin-left: 15px;
 }
