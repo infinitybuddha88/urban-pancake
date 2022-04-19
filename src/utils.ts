@@ -6,5 +6,3 @@ export const fibonacci = (num: number, memo: Record<string, number> = {}): numbe
 
     return (memo[num] = fibonacci(num - 1, memo) + fibonacci(num - 2, memo));
 };
-
-export const validateForm = (value: number): boolean => value >= 0 && value <= 500;
