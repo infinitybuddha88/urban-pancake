@@ -40,6 +40,7 @@ const showResult = () => {
 
 const onRight = (value: number) => {
     pipe(maxValidInteger.decode(value), fold(actions['max_valid_value'], actions['valid_value']));
+    model.currentValue = value;
     Button();
     StateField();
 }
@@ -52,14 +53,13 @@ inputEvent
     .pipe(
         map((event: InputEvent) => (event.target as HTMLInputElement)?.value),
     )
-    .subscribe((value: any) => {
+    .subscribe((value: string) => {
         if (value.length === 0) {
             actions['initial_state']();
             Button();
             StateField();
             return;
         }
-        model.currentValue = value;
         pipe(positiveInteger.decode(value), fold(onLeft, onRight));
     });
 
